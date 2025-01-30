@@ -11,15 +11,10 @@ The **News Topic Summary Generator** is a Flask-based web application that allow
 - Responsive UI with a dark-themed design
 
 ## Installation
-### Prerequisites
-Ensure you have the following installed:
-- Python 3.12
-- Flask
-
 ### Steps
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/news-summary-app.git
+   git clone https://github.com/sarin7/news-summary-app.git
    cd news-summary-app
    ```
 2. Install dependencies:
@@ -58,10 +53,3 @@ This app integrates with **NewsAPI** to fetch and summarize news articles.
 2. Enter a news topic in the text area.
 3. Click "Submit" to fetch news sources and summaries.
 4. Click on source links to read full articles.
-
-## Contributing
-If you want to contribute:
-- Fork the repository.
-- Create a new feature branch.
-- Submit a pull request with detailed changes.
-
