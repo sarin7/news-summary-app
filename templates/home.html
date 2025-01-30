@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Topic Summary</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #003300, #006600);
+            color: #ccffcc;
+            margin: 0;
+            padding: 20px;
+            overflow-y: auto; /* Enable scrolling */
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #002200;
+            border: 2px solid #00cc66;
+            border-radius: 15px;
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            margin: 0 auto; /* Center horizontally */
+            box-shadow: 0 0 15px 5px #00ff99;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00ff99;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px; /* Allow flexibility */
+            border: 1px solid #009933;
+            border-radius: 8px;
+            background-color: #001a00;
+            color: #ccffcc;
+            padding: 10px;
+            font-size: 16px;
+            resize: vertical; /* Allow resizing */
+            box-sizing: border-box;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            background-color: #004d00;
+            color: #ccffcc;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 18px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #009933;
+        }
+
+        .error {
+            color: #ff3333;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #004d00;
+            border: 1px solid #00cc66;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #001f00;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #009933;
+            box-sizing: border-box;
+        }
+
+        .top-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .top-buttons a {
+            text-decoration: none;
+            color: #ccffcc;
+            background-color: #004d00;
+            border: 1px solid #00cc66;
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+
+        .top-buttons a:hover {
+            background-color: #009933;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if not login_page %}
+        <div class="top-buttons">
+            <a href="/logout">Logout</a>
+        </div>
+        {% endif %}
+
+        {% if login_page %}
+        <h1>Login</h1>
+        <form method="POST" action="/login">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br>
+            <button type="submit">Login</button>
+            <a href="/forgot-password" style="display: block; text-align: center; margin-top: 10px;">Forgot Password?</a>
+        </form>
+        {% else %}
+        <h1>News Topic Summary Generator</h1>
+        <form method="POST" action="/process_prompt">
+            <label for="prompt">Enter your news topic:</label>
+            <textarea id="prompt" name="prompt" placeholder="Type your news topic here..."></textarea>
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if original_prompt %}
+            <div class="output">
+                <h2>News Topic:</h2>
+                <p>{{ original_prompt }}</p>
+            </div>
+        {% endif %}
+
+        {% if topic_summaries %}
+            <div class="output">
+                <h2>Topic Headline Summary (Last 7 Days):</h2>
+                <ul>
+                    {% for title, summary in topic_summaries.items() %}
+                        <li>
+                            <strong>{{ title }}</strong>
+                            <p>{{ summary }}</p>
+                        </li>
+                        <hr>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if news_sources %}
+            <div class="output">
+                <h2>News Sources:</h2>
+                <ul>
+                    {% for source, url in news_sources.items() %}
+                        <li><a href="{{ url }}" target="_blank" style="color: #00ff99;">{{ source }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
