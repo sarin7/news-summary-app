@@ -23,7 +23,7 @@ The **News Topic Summary Generator** is a Flask-based web application that allow
    ```
 3. Set up environment variables:
    ```sh
-   export FLASK_APP=app.py
+   export FLASK_APP=run.py
    export FLASK_ENV=development
    ```
 4. Run the Flask app:
